@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/InternEYXFrontend/static/css/main.aede704e.css",
+    "main.js": "/InternEYXFrontend/static/js/main.a4ea8485.js",
+    "index.html": "/InternEYXFrontend/index.html",
+    "main.aede704e.css.map": "/InternEYXFrontend/static/css/main.aede704e.css.map",
+    "main.a4ea8485.js.map": "/InternEYXFrontend/static/js/main.a4ea8485.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.aede704e.css",
+    "static/js/main.a4ea8485.js"
+  ]
+}
