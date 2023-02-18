@@ -6,11 +6,11 @@ this.addEventListener("install", (event) => {
     caches.open(cacheData).then((cache) => {
       cache.addAll([
         "/InternEYXFrontend/",
-        "/InternEYXFrontend/static/js/main.634a02ad.js",
-        "/InternEYXFrontend/static/css/main.aede704e.css",
-        "/InternEYXFrontend/favicon.ico",
-        "/InternEYXFrontend/manifest.json",
-        "/InternEYXFrontend/logo192.png",
+        // "/InternEYXFrontend/static/js/main.634a02ad.js",
+        // "/InternEYXFrontend/static/css/main.aede704e.css",
+        // "/InternEYXFrontend/favicon.ico",
+        // "/InternEYXFrontend/manifest.json",
+        // "/InternEYXFrontend/logo192.png",
         // "/ws",
         // "/manifest.json",
         // "/favicon.ico",
