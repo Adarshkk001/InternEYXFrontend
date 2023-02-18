@@ -7,7 +7,7 @@ this.addEventListener("install", (event) => {
       cache.addAll([
         "/InternEYXFrontend/",
         // "/InternEYXFrontend/static/js/main.634a02ad.js",
-        // "/InternEYXFrontend/static/css/main.aede704e.css",
+        "/InternEYXFrontend/static/css/main.aede704e.css",
         // "/InternEYXFrontend/favicon.ico",
         // "/InternEYXFrontend/manifest.json",
         // "/InternEYXFrontend/logo192.png",
