@@ -4,13 +4,13 @@ this.addEventListener("install", (event) => {
   console.log("appV1 Installing...");
   event.waitUntil(
     caches.open(cacheData).then((cache) => {
-      cache.add(
+      cache.addAll([
         "/InternEYXFrontend/",
         "/InternEYXFrontend/static/js/main.634a02ad.js",
         "/InternEYXFrontend/static/css/main.aede704e.css",
         "/InternEYXFrontend/favicon.ico",
         "/InternEYXFrontend/manifest.json",
-        "/InternEYXFrontend/logo192.png"
+        "/InternEYXFrontend/logo192.png",
         // "/ws",
         // "/manifest.json",
         // "/favicon.ico",
@@ -19,7 +19,7 @@ this.addEventListener("install", (event) => {
         // "/preferences",
         // "/mainpage",
         // "/personalPage",
-      );
+      ]);
     })
   );
 });
