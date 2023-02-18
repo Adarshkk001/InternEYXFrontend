@@ -4,8 +4,8 @@ this.addEventListener("install", (event) => {
   console.log("appV1 Installing...");
   event.waitUntil(
     caches.open(cacheData).then((cache) => {
-      cache.add([
-        "/",
+      cache.add(
+        "/InternEYXFrontend/"
         // "/ws",
         // "/manifest.json",
         // "/favicon.ico",
@@ -14,7 +14,7 @@ this.addEventListener("install", (event) => {
         // "/preferences",
         // "/mainpage",
         // "/personalPage",
-      ]);
+      );
     })
   );
 });
