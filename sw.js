@@ -9,6 +9,7 @@ this.addEventListener("install", (event) => {
         // "/InternEYXFrontend/static/js/main.634a02ad.js",
         "/InternEYXFrontend/static/css/main.aede704e.css",
         "/InternEYXFrontend/manifest.json",
+        "/InternEYXFrontend/favicon.ico",
         // "/InternEYXFrontend/favicon.ico",
         // "/InternEYXFrontend/manifest.json",
         // "/InternEYXFrontend/logo192.png",
@@ -42,13 +43,13 @@ this.addEventListener("fetch", (event) => {
         );
         break;
       case "/InternEYXFrontend/manifest.json":
-        event.respondWith(caches.match("/manifest.json"));
+        event.respondWith(caches.match("/InternEYXFrontend/manifest.json"));
         break;
       case "/InternEYXFrontend/favicon.ico":
-        event.respondWith(caches.match("/favicon.ico"));
+        event.respondWith(caches.match("/InternEYXFrontend/favicon.ico"));
         break;
       case "/InternEYXFrontend/logo192.png":
-        event.respondWith(caches.match("/logo192.png"));
+        event.respondWith(caches.match("/InternEYXFrontend/logo192.png"));
         break;
       case "/InternEYXFrontend/static/css/main.aede704e.css":
         event.respondWith(
