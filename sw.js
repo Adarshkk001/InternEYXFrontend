@@ -6,14 +6,14 @@ this.addEventListener("install", (event) => {
     caches.open(cacheData).then((cache) => {
       cache.addAll([
         "/",
-        "/ws",
-        "/manifest.json",
-        "/favicon.ico",
-        "/logo192.png",
-        "/static/js/bundle.js",
-        "/preferences",
-        "/mainpage",
-        "/personalPage",
+        // "/ws",
+        // "/manifest.json",
+        // "/favicon.ico",
+        // "/logo192.png",
+        // "/static/js/bundle.js",
+        // "/preferences",
+        // "/mainpage",
+        // "/personalPage",
       ]);
     })
   );
@@ -30,30 +30,30 @@ this.addEventListener("fetch", (event) => {
       case "/":
         event.respondWith(caches.match("/"));
         break;
-      case "/ws":
-        event.respondWith(caches.match("/ws"));
-        break;
-      case "/manifest.json":
-        event.respondWith(caches.match("/manifest.json"));
-        break;
-      case "/favicon.ico":
-        event.respondWith(caches.match("/favicon.ico"));
-        break;
-      case "/logo192.png":
-        event.respondWith(caches.match("/logo192.png"));
-        break;
-      case "/static/js/bundle.js":
-        event.respondWith(caches.match("/static/js/bundle.js"));
-        break;
-      case "/preferences":
-        event.respondWith(caches.match("/preferences"));
-        break;
-      case "/mainpage":
-        event.respondWith(caches.match("/mainpage"));
-        break;
-      case "/personalPage":
-        event.respondWith(caches.match("/personalPage"));
-        break;
+      // case "/ws":
+      //   event.respondWith(caches.match("/ws"));
+      //   break;
+      // case "/manifest.json":
+      //   event.respondWith(caches.match("/manifest.json"));
+      //   break;
+      // case "/favicon.ico":
+      //   event.respondWith(caches.match("/favicon.ico"));
+      //   break;
+      // case "/logo192.png":
+      //   event.respondWith(caches.match("/logo192.png"));
+      //   break;
+      // case "/static/js/bundle.js":
+      //   event.respondWith(caches.match("/static/js/bundle.js"));
+      //   break;
+      // case "/preferences":
+      //   event.respondWith(caches.match("/preferences"));
+      //   break;
+      // case "/mainpage":
+      //   event.respondWith(caches.match("/mainpage"));
+      //   break;
+      // case "/personalPage":
+      //   event.respondWith(caches.match("/personalPage"));
+      //   break;
       default:
         break;
     }
