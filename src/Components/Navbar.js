@@ -27,19 +27,19 @@ const Navbar = () => {
   };
   const handleRegister = (event) => {
     event.preventDefault();
-    navigate("./register");
+    navigate("/register");
   };
   const handleShop = (event) => {
     event.preventDefault();
-    navigate("./mainpage");
+    navigate("/mainpage");
   };
   const handlePreferences = (event) => {
     event.preventDefault();
-    navigate("./preferences");
+    navigate("/preferences");
   };
   const handlePersonalPreferences = (event) => {
     event.preventDefault();
-    navigate("./personalPage");
+    navigate("/personalPage");
   };
   return (
     <div>

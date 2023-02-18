@@ -30,7 +30,7 @@ const Login = () => {
   const handleLogin = async (event) => {
     event.preventDefault();
     await setIsLoading(true);
-    console.log(isLoading);
+    // console.log(isLoading);
     const User = {
       email: { email },
       password: { password },

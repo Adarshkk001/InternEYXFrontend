@@ -92,7 +92,7 @@ const PersonalPage = () => {
     }
 
     if (navigator.onLine) {
-      console.log("Online");
+      // console.log("Online");
       fetchData();
     } else {
       console.log("Offline");
