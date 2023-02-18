@@ -6,10 +6,11 @@ this.addEventListener("install", (event) => {
     caches.open(cacheData).then((cache) => {
       cache.addAll([
         "/InternEYXFrontend/",
-        // "/InternEYXFrontend/static/js/main.634a02ad.js",
+        "/InternEYXFrontend/static/js/main.807950ec.js",
         "/InternEYXFrontend/static/css/main.aede704e.css",
         "/InternEYXFrontend/manifest.json",
         "/InternEYXFrontend/favicon.ico",
+        "/InternEYXFrontend/logo192.png",
         // "/InternEYXFrontend/favicon.ico",
         // "/InternEYXFrontend/manifest.json",
         // "/InternEYXFrontend/logo192.png",
@@ -37,9 +38,14 @@ this.addEventListener("fetch", (event) => {
       case "/InternEYXFrontend/":
         event.respondWith(caches.match("/InternEYXFrontend/"));
         break;
-      case "/InternEYXFrontend/static/js/main.634a02ad.js":
+      case "/InternEYXFrontend/static/js/main.807950ec.js":
         event.respondWith(
-          caches.match("/InternEYXFrontend/static/js/main.634a02ad.js")
+          caches.match("/InternEYXFrontend/static/js/main.807950ec.js")
+        );
+        break;
+      case "/InternEYXFrontend/static/css/main.aede704e.css":
+        event.respondWith(
+          caches.match("/InternEYXFrontend/static/css/main.aede704e.css")
         );
         break;
       case "/InternEYXFrontend/manifest.json":
@@ -51,10 +57,8 @@ this.addEventListener("fetch", (event) => {
       case "/InternEYXFrontend/logo192.png":
         event.respondWith(caches.match("/InternEYXFrontend/logo192.png"));
         break;
-      case "/InternEYXFrontend/static/css/main.aede704e.css":
-        event.respondWith(
-          caches.match("/InternEYXFrontend/static/css/main.aede704e.css")
-        );
+      case "/InternEYXFrontend/logo192.png":
+        event.respondWith(caches.match("/InternEYXFrontend/logo192.png"));
         break;
       // case "/preferences":
       //   event.respondWith(caches.match("/preferences"));
