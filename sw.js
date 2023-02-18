@@ -5,7 +5,12 @@ this.addEventListener("install", (event) => {
   event.waitUntil(
     caches.open(cacheData).then((cache) => {
       cache.add(
-        "/InternEYXFrontend/"
+        "/InternEYXFrontend/",
+        "/InternEYXFrontend/static/js/main.634a02ad.js",
+        "/InternEYXFrontend/static/css/main.aede704e.css",
+        "InternEYXFrontend/favicon.ico",
+        "/InternEYXFrontend/manifest.json",
+        "/InternEYXFrontend/logo192.png"
         // "/ws",
         // "/manifest.json",
         // "/favicon.ico",
@@ -30,21 +35,25 @@ this.addEventListener("fetch", (event) => {
       case "/InternEYXFrontend/":
         event.respondWith(caches.match("/InternEYXFrontend/"));
         break;
-      // case "/ws":
-      //   event.respondWith(caches.match("/ws"));
-      //   break;
-      // case "/manifest.json":
-      //   event.respondWith(caches.match("/manifest.json"));
-      //   break;
-      // case "/favicon.ico":
-      //   event.respondWith(caches.match("/favicon.ico"));
-      //   break;
-      // case "/logo192.png":
-      //   event.respondWith(caches.match("/logo192.png"));
-      //   break;
-      // case "/static/js/bundle.js":
-      //   event.respondWith(caches.match("/static/js/bundle.js"));
-      //   break;
+      case "/InternEYXFrontend/static/js/main.634a02ad.js":
+        event.respondWith(
+          caches.match("/InternEYXFrontend/static/js/main.634a02ad.js")
+        );
+        break;
+      case "/manifest.json":
+        event.respondWith(caches.match("/manifest.json"));
+        break;
+      case "/favicon.ico":
+        event.respondWith(caches.match("/favicon.ico"));
+        break;
+      case "/logo192.png":
+        event.respondWith(caches.match("/logo192.png"));
+        break;
+      case "/InternEYXFrontend/static/css/main.aede704e.css":
+        event.respondWith(
+          caches.match("/InternEYXFrontend/static/css/main.aede704e.css")
+        );
+        break;
       // case "/preferences":
       //   event.respondWith(caches.match("/preferences"));
       //   break;
