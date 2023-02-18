@@ -4,7 +4,7 @@ this.addEventListener("install", (event) => {
   console.log("appV1 Installing...");
   event.waitUntil(
     caches.open(cacheData).then((cache) => {
-      cache.addAll([
+      cache.add([
         "/",
         // "/ws",
         // "/manifest.json",
