@@ -3,45 +3,77 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchItems } from "../features/items/itemsSlice";
 import Products from "./Products";
 import { InfinitySpin } from "react-loader-spinner";
+import PaginationFooter from "./PaginationFooter";
+import PageInfo from "./PageInfo";
 
 const MainPage = () => {
   const items = useSelector((state) => state.items);
   const dispatch = useDispatch();
 
   const [count, setCount] = useState(0);
-  const limit = 12;
+  const [searchCount, setSearchCount] = useState(0);
+  const [query, setQuery] = useState("");
+  const limit = 8;
 
   useEffect(() => {
+    // console.log("Count", count);
     function fetchit() {
       dispatch(fetchItems({ limit, skip: limit * count }));
     }
     fetchit();
   }, [count]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const handlePreviousClick = (count) => {
-    setCount((count) => count - 1);
+  useEffect(() => {
+    // console.log("searchCount", searchCount);
+    function fetchit() {
+      dispatch(fetchItems({ limit, skip: limit * searchCount, query }));
+    }
+    if (query) fetchit();
+  }, [searchCount]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    function handleSearch() {
+      setSearchCount(0);
+      if (query) {
+        // console.log("Query");
+        dispatch(fetchItems({ limit, skip: limit * searchCount, query }));
+      } else {
+        // console.log("Not query");
+        dispatch(fetchItems({ limit, skip: limit * count }));
+      }
+    }
+    handleSearch();
+  }, [query]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const handlePreviousClick = () => {
+    if (query) {
+      setSearchCount((searchCount) => searchCount - 1);
+    } else {
+      setCount((count) => count - 1);
+    }
+    // console.log("count: ", count, "searchCount: ", searchCount);
   };
   const handleNextClick = () => {
-    setCount((count) => count + 1);
-  };
-
-  const handleSearch = (event) => {
-    // console.log(event.target.value);
-    const query = event.target.value;
-    if (!query) {
-      dispatch(fetchItems({ limit, skip: limit * count }));
+    if (query) {
+      setSearchCount((searchCount) => searchCount + 1);
     } else {
-      function fetchit() {
-        dispatch(fetchItems({ limit, skip: 0, query }));
-      }
-      fetchit();
+      setCount((count) => count + 1);
     }
+    // console.log("count: ", count, "searchCount: ", searchCount);
+  };
+  const handleSearch = (event) => {
+    setQuery(event.target.value);
   };
 
   return (
     <div className="container my-7 ">
       <h1 className="text-center my-2">Products Page</h1>
       <h5 className="text-center">Experience Luxury Like Never Before</h5>
+      <PageInfo
+        limit={limit}
+        total={items.total}
+        pagenum={query ? searchCount + 1 : count + 1}
+      />
       <div className="d-flex justify-content-center">
         <input
           className="form-control mr-sm-2 my-4 w-50"
@@ -65,27 +97,19 @@ const MainPage = () => {
             />
           </div>
         )}
-        {!items.loading && items.error ? <div>Error: {items.error}</div> : null}
         {!items.loading && items.items.length
-          ? items.items.map((item) => <Products item={item} />)
+          ? items.items.map((item) => <Products item={item} key={item.title} />)
           : null}
       </div>
-      <div className="d-flex justify-content-between my-5">
-        <button
-          disabled={count <= 0}
-          onClick={handlePreviousClick}
-          className="btn btn-primary"
-        >
-          &larr; Previous
-        </button>
-        <button
-          disabled={count >= 100 / limit - 1}
-          onClick={handleNextClick}
-          className="btn btn-primary"
-        >
-          Next &rarr;
-        </button>
-      </div>
+      <PaginationFooter
+        prevBoundry={(query && !searchCount) || (!query && !count)}
+        handleNextClick={handleNextClick}
+        handlePreviousClick={handlePreviousClick}
+        nextBoundry={
+          (!query && count >= items.total / limit - 1) ||
+          (query && searchCount >= items.total / limit - 1)
+        }
+      />
     </div>
   );
 };

@@ -12,7 +12,12 @@ export const fetchPersonalItems = createAsyncThunk(
           : `https://dummyjson.com/products?limit=${options.limit}&skip=${options.skip}`
       )
       .then((res) => {
+        // console.log(res.data);
+        localStorage.setItem("personalItems", JSON.stringify(res.data));
         return res.data;
+      })
+      .catch((err) => {
+        return JSON.parse(localStorage.getItem("personalItems"));
       });
   }
 );

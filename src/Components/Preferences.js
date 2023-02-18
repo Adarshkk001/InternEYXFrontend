@@ -3,26 +3,32 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { categories, colors } from "./prefCategoriesColBradSize";
 import { useAlert } from "react-alert";
+import PreferenceComp from "./PreferenceComp";
 
 const Preferences = () => {
   const [SC, setSC] = useState([]); // select category
   const [SCol, setSCol] = useState([]); // select color
   const user = useSelector((state) => state.user);
   const alert = useAlert();
+  const [isLoadingCategory, setIsLoadingCategory] = useState(false);
+  const [isLoadingColor, setIsLoadingColor] = useState(false);
 
   // console.log(SC);
   useEffect(() => {
     async function fetchData() {
+      setIsLoadingCategory(true);
+      setIsLoadingColor(true);
       await axios
-        .get("http://localhost:3500/SelectedCategory", {
+        .get("https://interneyx.onrender.com/SelectedCategory", {
           headers: {
             "auth-token": user.authToken,
           },
         })
-        .then((res) => {
+        .then(async (res) => {
           let data = res.data;
-          data.forEach((element) => {
-            setSC((SC) => {
+          setIsLoadingCategory(false);
+          data.forEach(async (element) => {
+            await setSC((SC) => {
               if (SC.indexOf(element.CategoryName) === -1) {
                 SC.push(element.CategoryName);
                 document.getElementById(element.CategoryName).checked = true;
@@ -31,20 +37,32 @@ const Preferences = () => {
             });
           });
         })
-        .catch((err) => {
-          console.log(err);
+        .catch(async (err) => {
+          console.log("Error SC", err);
+          setIsLoadingCategory(false);
+          const collection = await JSON.parse(localStorage.getItem("SCKey"));
+          collection.forEach((element) => {
+            setSC((SC) => {
+              if (SC.indexOf(element) === -1) {
+                SC.push(element);
+                document.getElementById(element).checked = true;
+              }
+              return SC;
+            });
+          });
         });
 
       await axios
-        .get("http://localhost:3500/SelectedColors", {
+        .get("https://interneyx.onrender.com/SelectedColors", {
           headers: {
             "auth-token": user.authToken,
           },
         })
-        .then((res) => {
+        .then(async (res) => {
           let data = res.data;
-          data.forEach((element) => {
-            setSCol((SCol) => {
+          setIsLoadingColor(false);
+          data.forEach(async (element) => {
+            await setSCol((SCol) => {
               if (SCol.indexOf(element.ColorName) === -1) {
                 SCol.push(element.ColorName);
                 document.getElementById(element.ColorName).checked = true;
@@ -53,13 +71,26 @@ const Preferences = () => {
             });
           });
         })
-        .catch((err) => {
-          console.log(err);
+        .catch(async (err) => {
+          console.log("Error SCol", err);
+          setIsLoadingColor(false);
+          let collection = await JSON.parse(localStorage.getItem("SColKey"));
+          collection.forEach((element) => {
+            setSCol((SCol) => {
+              if (SCol.indexOf(element) === -1) {
+                SCol.push(element);
+                document.getElementById(element).checked = true;
+              }
+              return SCol;
+            });
+          });
         });
     }
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {}, [SC]);
 
   const handleCategoryChange = (event) => {
     event.stopPropagation();
@@ -67,7 +98,7 @@ const Preferences = () => {
       setSC((SC) => {
         if (SC.indexOf(event.target.value) === -1) {
           SC.push(event.target.value);
-          console.log(SC);
+          // console.log(SC);
         }
         return SC;
       });
@@ -75,7 +106,6 @@ const Preferences = () => {
       setSC((SC) => {
         const temp = event.target.value;
         const newArr = SC.filter((e) => e !== temp);
-        console.log(newArr);
         return newArr;
       });
     }
@@ -86,16 +116,14 @@ const Preferences = () => {
       setSCol((SCol) => {
         if (SCol.indexOf(event.target.value) === -1) {
           SCol.push(event.target.value);
-          console.log(SCol);
         }
-        // console.log("1", SCol);
         return SCol;
       });
     } else {
       setSCol((SCol) => {
         const temp = event.target.value;
         const newArr = SCol.filter((e) => e !== temp);
-        console.log(newArr);
+        // console.log(newArr);
         return newArr;
       });
     }
@@ -106,7 +134,7 @@ const Preferences = () => {
     // console.log(SC);
     await axios
       .post(
-        "http://localhost:3500/updateCategory",
+        "https://interneyx.onrender.com/updateCategory",
         {
           categories: SC,
         },
@@ -118,6 +146,7 @@ const Preferences = () => {
       )
       .then((res) => {
         alert.success("Successfully Saved Categories");
+        SC.length && localStorage.setItem("SCKey", JSON.stringify(SC));
       })
       .catch((err) => {
         alert.error("Can't Save Categories, Please Try Again Later");
@@ -125,7 +154,7 @@ const Preferences = () => {
 
     await axios
       .post(
-        "http://localhost:3500/updateColors",
+        "https://interneyx.onrender.com/updateColors",
         {
           colors: SCol,
         },
@@ -137,6 +166,7 @@ const Preferences = () => {
       )
       .then((res) => {
         alert.success("Successfully Saved Colors");
+        SCol.length && localStorage.setItem("SColKey", JSON.stringify(SCol));
       })
       .catch((err) => {
         alert.error("Can't Save Colors, Please Try Again Later");
@@ -155,60 +185,22 @@ const Preferences = () => {
         >
           Save
         </button>
+        {/* {console.log(user.authToken)} */}
       </div>
       <div className="container preference-container">
         <div className="row preference-row d-flex justify-content-evenly">
-          <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 my-4 h-100 rounded ">
-            <h5 className="text-center">Select Categories</h5>
-            <div className="All Colors">
-              <ul>
-                {categories.map((category) => (
-                  <div className="form-check">
-                    <input
-                      className="form-check-input"
-                      type="checkbox"
-                      value={category}
-                      id={category}
-                      key={category}
-                      onChange={handleCategoryChange}
-                    />
-                    <label
-                      className="form-check-label"
-                      htmlFor="flexCheckDefault"
-                    >
-                      {category}
-                    </label>
-                    <span className="badge"></span>
-                  </div>
-                ))}
-              </ul>
-            </div>
-          </div>
-          <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 my-4 h-100 rounded ">
-            <h5 className="text-center">Select Color</h5>
-            <div className="All Brands">
-              <ul>
-                {colors.map((color) => (
-                  <div className="form-check">
-                    <input
-                      className="form-check-input"
-                      type="checkbox"
-                      value={color}
-                      id={color}
-                      key={color}
-                      onChange={handleColorChange}
-                    />
-                    <label
-                      className="form-check-label"
-                      htmlFor="flexCheckDefault"
-                    >
-                      {color}
-                    </label>
-                  </div>
-                ))}
-              </ul>
-            </div>
-          </div>
+          <PreferenceComp
+            name="Categories"
+            element={categories}
+            handleChange={handleCategoryChange}
+            isLoading={isLoadingCategory}
+          />
+          <PreferenceComp
+            name="Colors"
+            element={colors}
+            handleChange={handleColorChange}
+            isLoading={isLoadingColor}
+          />
         </div>
       </div>
     </div>

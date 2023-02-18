@@ -2,7 +2,6 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 export const fetchItems = createAsyncThunk("items/", async (options) => {
-  if (options.query) console.log(options.query);
   return await axios
     .get(
       options.query
@@ -10,13 +9,18 @@ export const fetchItems = createAsyncThunk("items/", async (options) => {
         : `https://dummyjson.com/products?limit=${options.limit}&skip=${options.skip}`
     )
     .then((res) => {
+      localStorage.setItem(`items-${options.skip}`, JSON.stringify(res.data));
       return res.data;
+    })
+    .catch((err) => {
+      return JSON.parse(localStorage.getItem(`items-${options.skip}`));
     });
 });
 
 const initialState = {
   loading: false,
   items: "",
+  total: 0,
   error: "",
 };
 const itemsSlice = createSlice({
@@ -29,13 +33,16 @@ const itemsSlice = createSlice({
     builder.addCase(fetchItems.fulfilled, (state, action) => {
       state.loading = false;
       state.items = action.payload.products;
+      state.total = action.payload.total;
       // console.log("Item slice:", action.payload);
       state.error = "";
     });
     builder.addCase(fetchItems.rejected, (state, action) => {
       state.loading = false;
       state.items = "";
+      state.total = 0;
       state.error = action.error;
+      // console.log("Error:", action.payload);
     });
   },
 });

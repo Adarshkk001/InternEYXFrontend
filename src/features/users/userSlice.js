@@ -10,7 +10,7 @@ export const userLogin = createAsyncThunk(
   "userasync/UserLogin",
   async (User) => {
     return await axios
-      .post("http://localhost:3500/users/login", {
+      .post("https://interneyx.onrender.com/users/login", {
         email: User.email.email,
         password: User.password.password,
       })

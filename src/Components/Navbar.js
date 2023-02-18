@@ -130,6 +130,11 @@ const Navbar = () => {
           </div>
         </div>
       </nav>
+      {!navigator.onLine && (
+        <div className="alert alert-warning text-center p-1" role="alert">
+          Unable to reach the server
+        </div>
+      )}
     </div>
   );
 };

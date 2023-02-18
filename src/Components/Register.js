@@ -1,16 +1,15 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-// import { Link } from "react-router-dom";
+import { RotatingLines } from "react-loader-spinner";
 import { useAlert } from "react-alert";
-
-// import { useDispatch } from "react-redux";
 
 const Register = () => {
   // const dispatch = useDispatch();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const alert = useAlert();
 
@@ -27,7 +26,7 @@ const Register = () => {
 
   const handleRegister = async (event) => {
     event.preventDefault();
-
+    await setIsLoading(true);
     const User = {
       name,
       email,
@@ -35,7 +34,7 @@ const Register = () => {
     };
     // console.log(User);
     await axios
-      .post("http://localhost:3500/users/register", {
+      .post("https://interneyx.onrender.com/users/register", {
         name: User.name,
         email: User.email,
         password: User.password,
@@ -54,48 +53,65 @@ const Register = () => {
           alert.error(`Error: ${error.response.data.errors}`);
         }
       });
+    setIsLoading(false);
   };
 
   return (
-    <div className="container w-50">
-      <form>
-        <div className="mb-3">
-          <label className="form-label">Name</label>
-          <input
-            type="name"
-            className="form-control"
-            id="name"
-            aria-describedby="emailHelp"
-            onChange={handleNameChange}
+    <div className="container">
+      <h1 className="text-center">Register</h1>
+      <div className="d-flex justify-content-center">
+        {!isLoading ? (
+          <form className="w-50">
+            <div className="mb-3">
+              <label className="form-label">Name</label>
+              <input
+                type="name"
+                className="form-control"
+                id="name"
+                aria-describedby="emailHelp"
+                onChange={handleNameChange}
+                placeholder="Length must be greater than 3"
+              />
+            </div>
+            <div className="mb-3">
+              <label className="form-label">Email address</label>
+              <input
+                type="email"
+                className="form-control"
+                id="email"
+                aria-describedby="emailHelp"
+                onChange={handleEmailChange}
+                placeholder="Enter a valid email"
+              />
+            </div>
+            <div className="mb-3">
+              <label className="form-label">Password</label>
+              <input
+                type="password"
+                className="form-control"
+                id="password"
+                onChange={handlePasswordChange}
+                placeholder="Length must be greater than 5"
+              />
+            </div>
+            <button
+              onClick={handleRegister}
+              type="submit"
+              className="btn btn-primary"
+            >
+              Submit
+            </button>
+          </form>
+        ) : (
+          <RotatingLines
+            strokeColor="#4285F4"
+            strokeWidth="5"
+            animationDuration="0.75"
+            width="96"
+            visible={true}
           />
-        </div>
-        <div className="mb-3">
-          <label className="form-label">Email address</label>
-          <input
-            type="email"
-            className="form-control"
-            id="email"
-            aria-describedby="emailHelp"
-            onChange={handleEmailChange}
-          />
-        </div>
-        <div className="mb-3">
-          <label className="form-label">Password</label>
-          <input
-            type="password"
-            className="form-control"
-            id="password"
-            onChange={handlePasswordChange}
-          />
-        </div>
-        <button
-          onClick={handleRegister}
-          type="submit"
-          className="btn btn-primary"
-        >
-          Submit
-        </button>
-      </form>
+        )}
+      </div>
     </div>
   );
 };
