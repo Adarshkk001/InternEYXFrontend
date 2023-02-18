@@ -8,7 +8,7 @@ this.addEventListener("install", (event) => {
         "/InternEYXFrontend/",
         "/InternEYXFrontend/static/js/main.634a02ad.js",
         "/InternEYXFrontend/static/css/main.aede704e.css",
-        "InternEYXFrontend/favicon.ico",
+        "/InternEYXFrontend/favicon.ico",
         "/InternEYXFrontend/manifest.json",
         "/InternEYXFrontend/logo192.png"
         // "/ws",
@@ -40,13 +40,13 @@ this.addEventListener("fetch", (event) => {
           caches.match("/InternEYXFrontend/static/js/main.634a02ad.js")
         );
         break;
-      case "/manifest.json":
+      case "/InternEYXFrontend/manifest.json":
         event.respondWith(caches.match("/manifest.json"));
         break;
-      case "/favicon.ico":
+      case "/InternEYXFrontend/favicon.ico":
         event.respondWith(caches.match("/favicon.ico"));
         break;
-      case "/logo192.png":
+      case "/InternEYXFrontend/logo192.png":
         event.respondWith(caches.match("/logo192.png"));
         break;
       case "/InternEYXFrontend/static/css/main.aede704e.css":
