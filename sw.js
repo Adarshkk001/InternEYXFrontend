@@ -27,8 +27,8 @@ this.addEventListener("fetch", (event) => {
   const url = new URL(event.request.url);
   if (!navigator.onLine && url.origin == location.origin) {
     switch (url.pathname) {
-      case "/":
-        event.respondWith(caches.match("/"));
+      case "/InternEYXFrontend/":
+        event.respondWith(caches.match("/InternEYXFrontend/"));
         break;
       // case "/ws":
       //   event.respondWith(caches.match("/ws"));
